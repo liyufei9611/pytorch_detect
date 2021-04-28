@@ -15,7 +15,7 @@ import argparse
 import pandas as pd
 
 
-sys.path.append('/usr/local/lib/python3.7/site-packages')
+# sys.path.append('/usr/local/lib/python3.7/site-packages')
 from PIL import Image
 
 import torch
@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    os.makedirs("output", exist_ok=True)
+    # os.makedirs("output", exist_ok=True)
     
 
     # Set up model
@@ -70,7 +70,9 @@ if __name__ == "__main__":
 
     while 1:
         #开始循环
-        print('>>>>>>>>>>>:',time.time())
+        kaishi_time=time.time()
+        os.makedirs("temp_process",exist_ok=True)
+        shutil.rmtree('temp_process')
         os.makedirs("temp_process",exist_ok=True)
         #移动
         process_list = os.listdir(image_folder)
@@ -155,6 +157,10 @@ if __name__ == "__main__":
         df_agg_by_mean=df.groupby(['cam']).mean().round(2)
         df_agg_by_mean.to_csv('../result/result_online.csv')
         del df
-        shutil.rmtree('temp_process')
-        time.sleep(sleep_time)
+
+        jieshu_time=time.time()
+        if jieshu_time-kaishi_time<60:
+            time.sleep(60-jieshu_time+kaishi_time)
+        else:
+            print('超时！')
 
