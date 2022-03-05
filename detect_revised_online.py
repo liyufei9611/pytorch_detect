@@ -158,9 +158,9 @@ if __name__ == "__main__":
         df_agg_by_mean.to_csv('../result/result_online.csv')
         del df
 
-        jieshu_time=time.time()
-        if jieshu_time-kaishi_time<60:
-            time.sleep(60-jieshu_time+kaishi_time)
+        end_time=time.time()
+        if end_time-start_time<60:
+            time.sleep(60-end_time+start_time)
         else:
             print('超时！')
 
